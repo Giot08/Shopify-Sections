@@ -1,0 +1,14 @@
+{
+  "name": "shopify-sections",
+  "version": "1.0.0",
+  "description": "Customizable shopify sections for free use",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "node src/theme-sync.js"
+  },
+  "author": "Jose Miguel Torres Medina",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.4.5"
+  }
+}
