@@ -1,198 +1,154 @@
-{% comment %} begin dependencies {% endcomment %}
-<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
-<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js" defer></script>
-<script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js" defer></script>
-<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js" defer></script>
-{% comment %} end dependencies {% endcomment %}
+{% liquid
+  assign slides_size = section.blocks.size
+  assign slides = section.blocks
+%}
+<div id="product-cards-{{ section.id }}" class="_cards-container" style="background-color: {{ section.settings.section_background }};">
+  {% if section.settings.title != blank %}
+    <h2 class="_cards-title" style="text-align: {{ section.settings.title_align }}; color: {{ section.settings.title_color }};">
+      {{ section.settings.title }}
+    </h2>
+  {% endif %}
 
-<script type="text/javascript" src="{{ 'giot-product-cards.js' | asset_url }}" defer></script>
-<link rel="stylesheet" href="{{ 'giot-product-cards.css' | asset_url }}">
+  {% if slides_size > 1 %}
+    <div class="_product-card-carousel _product-card-carousel--{{ section.id }}">
+      {% for slide in slides %}
+        <div class="_card-slide slide-{{ slide.id }}">
+          <div class="_card">
+            <div class="_card-media">
+              <div class="_card-image">
+                {{ slide.settings.bg_image | image_url: width: 426 | image_tag: class: '_card-image-bg' }}
+              </div>
+              <a href="/products/{{ slide.settings.product.handle }}" class="_card-link">
+                {{ slide.settings.main_image | image_url: width: 426 | image_tag: class: '_card-image-render' }}
+              </a>
+              <div class="_card-info">
+                <div class="_title">
+                  <a href="/products/{{ slide.settings.product.handle }}" class="_card-link">
+                    {{ slide.settings.product.title }}
+                  </a>
+                </div>
+                <div class="_price">
+                  <span class="_sale-price">{{ slide.settings.product.price | money }}</span>
+                  {% if slide.settings.product.compare_at_price > slide.settings.product.price %}
+                    <span class="_compare-price">{{ slide.settings.product.compare_at_price | money }}</span>
+                    <span class="_compare-price-savings">
+                      {{ slide.settings.product.compare_at_price 
+                        | minus: slide.settings.product.price 
+                        | times: 100.0 
+                        | divided_by: slide.settings.product.compare_at_price
+                        | ceil
+                      }}% OFF</span>
+                  {% endif %}
+                </div>
+                <div class="_description">
+                  {% if slide.settings.use_alternative_description %}
+                    {{ slide.settings.description }}
+                  {% else %}
+                    {{ slide.settings.product.description }}
+                  {% endif %}
+                </div>
+                <form class="_card-form" action="/cart/add" method="post" id="add-to-cart-form">
+                  <input type="hidden" name="id" value="{{ slide.settings.product.selected_or_first_available_variant.id }}">
+                  <button class="_card-atc" type="submit">
+                    <div class="_btn-text">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <path
+                          d="M21 4H2v2h2.3l3.28 9a3 3 0 0 0 2.82 2H19v-2h-8.6a1 1 0 0 1-.94-.66L9 13h9.28a2 2 0 0 0 1.92-1.45L22 5.27A1 1 0 0 0 21.27 4 .84.84 0 0 0 21 4zm-2.75 7h-10L6.43 6h13.24z">
+                        </path>
+                        <circle cx="10.5" cy="19.5" r="1.5"></circle>
+                        <circle cx="16.5" cy="19.5" r="1.5"></circle>
+                      </svg>
+                      <span>
+                        {{ slide.settings.button_label }}
+                      </span>
+                    </div>
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>      
+      {% endfor %}
+    </div>
+  {% endif %}
 
-<div class="_cards-container">
-  <div class="_product-card-carousel">
-    <div class="_card-slide">
-      <div class="_card">
-        <div class="_card-media">
-          <div class="_card-image">
-            <img src="https://cdn.shopify.com/s/files/1/0677/4010/6906/files/bg1.png?v=1746688647"
-              alt="product image bg" width="100%" height="100%" loading="lazy" class="_card-image-bg">
-          </div>
-          <a href="/collections/all" class="_card-link">
-            <img src="https://cdn.shopify.com/s/files/1/0677/4010/6906/files/ring2.png?v=1746688648"
-              alt="product image render" width="100%" height="100%" loading="lazy" class="_card-image-render">
-          </a>
-          <div class="_card-info">
-            <div class="_title">
-              <a href="/collections/all" class="_card-link">
-                product title
-              </a>
-            </div>
-            <div class="_price">
-              <span class="_sale-price">$1.100</span>
-              <span class="_compare-price">$2.200</span>
-              <span class="_compare-price-savings">50% off</span>
-            </div>
-            <div class="_description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis at
-              accusamus, ad soluta reprehenderit voluptates.</div>
-            <form class="_card-form" action="/cart/add" method="post" id="add-to-cart-form">
-              <input type="hidden" name="id" value="45719729864858">
-              <button class="_card-atc" type="submit">
-                <div class="_btn-text">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                    <path
-                      d="M21 4H2v2h2.3l3.28 9a3 3 0 0 0 2.82 2H19v-2h-8.6a1 1 0 0 1-.94-.66L9 13h9.28a2 2 0 0 0 1.92-1.45L22 5.27A1 1 0 0 0 21.27 4 .84.84 0 0 0 21 4zm-2.75 7h-10L6.43 6h13.24z">
-                    </path>
-                    <circle cx="10.5" cy="19.5" r="1.5"></circle>
-                    <circle cx="16.5" cy="19.5" r="1.5"></circle>
-                  </svg>
-                  <span>
-                    Add to cart
-                  </span>
-                </div>
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
+  {% if section.settings.dots or section.settings.arrows %}
+    <div class="_cards-controls">
+      {% if section.settings.arrows %}
+        <button class="_cards-control-btn _cards-control-btn-prev--{{ section.id }}">
+          <svg xmlns="http://www.w3.org/2000/svg" 
+            width="24" 
+            height="24" 
+            viewBox="0 0 24 24"><path d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z"></path></svg>
+        </button>
+      {% endif %}
+      {% if section.settings.dots %}
+        <div class="_cards-control-dots"></div>
+      {% endif %}
+      {% if section.settings.arrows %}
+        <button class="_cards-control-btn _cards-control-btn-next--{{ section.id }}">
+        <svg xmlns="http://www.w3.org/2000/svg" 
+          width="24" 
+          height="24" 
+          viewBox="0 0 24 24"><path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z"></path></svg>
+        </button>
+      {% endif %}
     </div>
-    <div class="_card-slide">
-      <div class="_card">
-        <div class="_card-media">
-          <div class="_card-image">
-            <img src="https://cdn.shopify.com/s/files/1/0677/4010/6906/files/bg1.png?v=1746688647"
-              alt="product image bg" width="100%" height="100%" loading="lazy" class="_card-image-bg">
-          </div>
-          <a href="/collections/all" class="_card-link">
-            <img src="https://cdn.shopify.com/s/files/1/0677/4010/6906/files/ring2.png?v=1746688648"
-              alt="product image render" width="100%" height="100%" loading="lazy" class="_card-image-render">
-          </a>
-          <div class="_card-info">
-            <div class="_title">
-              <a href="/collections/all" class="_card-link">
-                product title
-              </a>
-            </div>
-            <div class="_price">
-              <span class="_sale-price">$1.100</span>
-              <span class="_compare-price">$2.200</span>
-              <span class="_compare-price-savings">50% off</span>
-            </div>
-            <div class="_description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis at
-              accusamus, ad soluta reprehenderit voluptates. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas tempora fugiat sequi delectus tenetur libero, veritatis saepe ipsum, velit iste beatae quis. Placeat aliquid consectetur porro at aperiam iusto, rerum illo quasi veritatis consequuntur, eveniet dolor reprehenderit ratione delectus natus?</div>
-            <form class="_card-form" action="/cart/add" method="post" id="add-to-cart-form">
-              <input type="hidden" name="id" value="45719729864858">
-              <button class="_card-atc" type="submit">
-                <div class="_btn-text">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                    <path
-                      d="M21 4H2v2h2.3l3.28 9a3 3 0 0 0 2.82 2H19v-2h-8.6a1 1 0 0 1-.94-.66L9 13h9.28a2 2 0 0 0 1.92-1.45L22 5.27A1 1 0 0 0 21.27 4 .84.84 0 0 0 21 4zm-2.75 7h-10L6.43 6h13.24z">
-                    </path>
-                    <circle cx="10.5" cy="19.5" r="1.5"></circle>
-                    <circle cx="16.5" cy="19.5" r="1.5"></circle>
-                  </svg>
-                  <span>
-                    Add to cart
-                  </span>
-                </div>
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="_card-slide">
-      <div class="_card">
-        <div class="_card-media">
-          <div class="_card-image">
-            <img src="https://cdn.shopify.com/s/files/1/0677/4010/6906/files/bg1.png?v=1746688647"
-              alt="product image bg" width="100%" height="100%" loading="lazy" class="_card-image-bg">
-          </div>
-          <a href="/collections/all" class="_card-link">
-            <img src="https://cdn.shopify.com/s/files/1/0677/4010/6906/files/ring2.png?v=1746688648"
-              alt="product image render" width="100%" height="100%" loading="lazy" class="_card-image-render">
-          </a>
-          <div class="_card-info">
-            <div class="_title">
-              <a href="/collections/all" class="_card-link">
-                product title
-              </a>
-            </div>
-            <div class="_price">
-              <span class="_sale-price">$1.100</span>
-              <span class="_compare-price">$2.200</span>
-              <span class="_compare-price-savings">50% off</span>
-            </div>
-            <div class="_description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis at
-              accusamus, ad soluta reprehenderit voluptates.</div>
-            <form class="_card-form" action="/cart/add" method="post" id="add-to-cart-form">
-              <input type="hidden" name="id" value="45719729864858">
-              <button class="_card-atc" type="submit">
-                <div class="_btn-text">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                    <path
-                      d="M21 4H2v2h2.3l3.28 9a3 3 0 0 0 2.82 2H19v-2h-8.6a1 1 0 0 1-.94-.66L9 13h9.28a2 2 0 0 0 1.92-1.45L22 5.27A1 1 0 0 0 21.27 4 .84.84 0 0 0 21 4zm-2.75 7h-10L6.43 6h13.24z">
-                    </path>
-                    <circle cx="10.5" cy="19.5" r="1.5"></circle>
-                    <circle cx="16.5" cy="19.5" r="1.5"></circle>
-                  </svg>
-                  <span>
-                    Add to cart
-                  </span>
-                </div>
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="_card-slide">
-      <div class="_card">
-        <div class="_card-media">
-          <div class="_card-image">
-            <img src="https://cdn.shopify.com/s/files/1/0677/4010/6906/files/bg1.png?v=1746688647"
-              alt="product image bg" width="100%" height="100%" loading="lazy" class="_card-image-bg">
-          </div>
-          <a href="/collections/all" class="_card-link">
-            <img src="https://cdn.shopify.com/s/files/1/0677/4010/6906/files/ring2.png?v=1746688648"
-              alt="product image render" width="100%" height="100%" loading="lazy" class="_card-image-render">
-          </a>
-          <div class="_card-info">
-            <div class="_title">
-              <a href="/collections/all" class="_card-link">
-                product title
-              </a>
-            </div>
-            <div class="_price">
-              <span class="_sale-price">$1.100</span>
-              <span class="_compare-price">$2.200</span>
-              <span class="_compare-price-savings">50% off</span>
-            </div>
-            <div class="_description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis at
-              accusamus, ad soluta reprehenderit voluptates.</div>
-            <form class="_card-form" action="/cart/add" method="post" id="add-to-cart-form">
-              <input type="hidden" name="id" value="45719729864858">
-              <button class="_card-atc" type="submit">
-                <div class="_btn-text">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                    <path
-                      d="M21 4H2v2h2.3l3.28 9a3 3 0 0 0 2.82 2H19v-2h-8.6a1 1 0 0 1-.94-.66L9 13h9.28a2 2 0 0 0 1.92-1.45L22 5.27A1 1 0 0 0 21.27 4 .84.84 0 0 0 21 4zm-2.75 7h-10L6.43 6h13.24z">
-                    </path>
-                    <circle cx="10.5" cy="19.5" r="1.5"></circle>
-                    <circle cx="16.5" cy="19.5" r="1.5"></circle>
-                  </svg>
-                  <span>
-                    Add to cart
-                  </span>
-                </div>
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>    
-  </div>
+  {% endif %}
 </div>
 
+<style>
+  {% for slide in slides %}
+    #product-cards-{{ section.id }} .slide-{{ slide.id }} ._title {
+      color: {{ slide.settings.title_color }};
+    }
+
+    #product-cards-{{ section.id }} .slide-{{ slide.id }} ._sale-price {
+      color: {{ slide.settings.price_color }};
+    }
+
+    #product-cards-{{ section.id }} .slide-{{ slide.id }} ._compare-price {
+      color: {{ slide.settings.compare_price_color }};
+    }
+  
+    #product-cards-{{ section.id }} .slide-{{ slide.id }} ._description {
+      color: {{ slide.settings.description_color }};
+    }
+
+  {% endfor %}
+</style>
+
+
+<script defer>
+  document.addEventListener('DOMContentLoaded', () => {
+    $('._product-card-carousel--{{ section.id }}').slick({
+      centerMode: {{ section.settings.center_mode }},
+      infinite: {{ section.settings.infinite }},
+      slidesToShow: {{ section.settings.slides_to_show }},
+      slidesToScroll: {{ section.settings.slides_to_scroll }},
+      autoplay: {{ section.settings.autoplay }},
+      autoplaySpeed: {{ section.settings.autoplay_speed | times: 1000 }},
+      arrows: {{ section.settings.arrows }},
+      dots: {{ section.settings.dots }},
+      pauseOnHover: {{ section.settings.pause_on_hover }},
+      pauseOnFocus: true,
+      variableWidth: true,
+      arrows: {{ section.settings.arrows }},
+      prevArrow: '._cards-control-btn-prev--{{ section.id }}',
+      nextArrow: '._cards-control-btn-next--{{ section.id }}',
+      appendDots: '._cards-control-dots',
+      responsive: [
+        {
+          breakpoint: 600,
+          settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1,
+          }
+        }
+      ]
+    });
+  });
+</script>
 
 {% schema %}
   {
@@ -204,120 +160,179 @@
   },
   "settings": [
     {
-      "type": "inline_richtext",
-      "id": "heading",
-      "default": "t:sections.video.settings.heading.default",
-      "label": "t:sections.video.settings.heading.label"
-    },
-    {
-      "type": "select",
-      "id": "heading_size",
-      "options": [
-        {
-          "value": "h2",
-          "label": "t:sections.all.heading_size.options__1.label"
-        },
-        {
-          "value": "h1",
-          "label": "t:sections.all.heading_size.options__2.label"
-        },
-        {
-          "value": "h0",
-          "label": "t:sections.all.heading_size.options__3.label"
-        },
-        {
-          "value": "hxl",
-          "label": "t:sections.all.heading_size.options__4.label"
-        },
-        {
-          "value": "hxxl",
-          "label": "t:sections.all.heading_size.options__5.label"
-        }
-      ],
-      "default": "h1",
-      "label": "t:sections.all.heading_size.label"
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_video_looping",
-      "label": "t:sections.video.settings.enable_video_looping.label",
-      "default": false
-    },
-    {
-      "type": "header",
-      "content": "t:sections.video.settings.header__1.content"
-    },
-    {
-      "type": "video",
-      "id": "video",
-      "label": "t:sections.video.settings.video.label"
-    },
-    {
-      "type": "header",
-      "content": "t:sections.video.settings.header__2.content"
-    },
-    {
-      "type": "paragraph",
-      "content": "t:sections.video.settings.paragraph.content"
-    },
-    {
-      "type": "video_url",
-      "id": "video_url",
-      "accept": ["youtube", "vimeo"],
-      "default": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
-      "label": "t:sections.video.settings.video_url.label",
-      "info": "t:sections.video.settings.video_url.info"
-    },
-    {
-      "type": "image_picker",
-      "id": "cover_image",
-      "label": "t:sections.video.settings.cover_image.label"
+      "type": "color",
+      "id": "section_background",
+      "label": "Section background",
+      "default": "#191c29"
     },
     {
       "type": "text",
-      "id": "description",
-      "label": "t:sections.video.settings.description.label",
-      "info": "t:sections.video.settings.description.info"
+      "id": "title",
+      "default": "Product cards",
+      "label": "Title"
     },
     {
-      "type": "header",
-      "content": "t:sections.video.settings.header__3.content"
+      "type": "select",
+      "id": "title_align",
+      "label": "Title align",
+      "default": "left",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#ffffff"
     },
     {
       "type": "checkbox",
-      "id": "full_width",
-      "label": "t:sections.video.settings.full_width.label",
-      "default": false
+      "id": "infinite",
+      "default": true,
+      "label": "Infinite carousel"
     },
     {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "t:sections.all.colors.label",
-      "default": "scheme-1"
-    },
-    {
-      "type": "header",
-      "content": "t:sections.all.padding.section_padding_heading"
+      "type": "checkbox",
+      "id": "center_mode",
+      "default": true,
+      "label": "Center mode",
+      "info": "If true, the carousel will be centered on the page, highly recommend to set slides to show to 1"
     },
     {
       "type": "range",
-      "id": "padding_top",
-      "min": 0,
-      "max": 100,
-      "step": 4,
-      "unit": "px",
-      "label": "t:sections.all.padding.padding_top",
-      "default": 36
+      "id": "slides_to_show",
+      "default": 3,
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "label": "Slides to show",
+      "info": "In desktop, for mobile it will be 1"
     },
     {
       "type": "range",
-      "id": "padding_bottom",
-      "min": 0,
-      "max": 100,
-      "step": 4,
-      "unit": "px",
-      "label": "t:sections.all.padding.padding_bottom",
-      "default": 36
+      "id": "slides_to_scroll",
+      "default": 1,
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "label": "Slides to scroll ",
+      "info": "In desktop, for mobile it will be 1"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "default": false,
+      "label": "Autoplay"
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "default": 5,
+      "min": 1,
+      "max": 12,
+      "step": 1,
+      "label": "Autoplay speed",
+      "info": "In seconds"
+    },
+    {
+      "type": "checkbox",
+      "id": "pause_on_hover",
+      "default": true,
+      "label": "Pause on hover"
+    },
+    {
+      "type": "checkbox",
+      "id": "arrows", 
+      "default": true,
+      "label": "Show arrows"
+    },
+    {
+      "type": "checkbox",
+      "id": "dots",
+      "default": true,
+      "label": "Show dots"
+    },
+    {
+      "type": "color",
+      "id": "controls_color",
+      "label": "Controls color",
+      "default": "#ffffff"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "image_picker",
+          "id": "bg_image",
+          "label": "Background image, required a 16:9 aspect ratio"
+        },
+        {
+          "type": "image_picker",
+          "id": "main_image",
+          "label": "main image, required a 4:3 aspect ratio, .png transparent background"
+        },
+        {
+          "type": "color",
+          "id": "title_color",
+          "label": "Title color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "price_color",
+          "label": "Price color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "compare_price_color",
+          "label": "Compare price color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_alternative_description",
+          "label": "Use an alternative description",
+          "default": false
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Alternative description"
+        },
+        {
+          "type": "color",
+          "id": "description_color",
+          "label": "Description color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "ATC button label",
+          "default": "Add to cart"
+        }
+      ]
     }
   ],
   "presets": [
