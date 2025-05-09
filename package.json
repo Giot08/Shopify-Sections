@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "update": "node src/theme-sync.js",
-    "theme": "cd ./theme && theme watch --allow-live",
+    "dev": "cd ./theme && theme watch --allow-live",
     "css": "npx @tailwindcss/cli -i ./src/input.css -o ./theme/assets/giot-product-cards.css --watch",
     "build": "esbuild ./src/input.js --bundle --outfile=./theme/assets/giot-product-cards.js --watch --minify"
   },

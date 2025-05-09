@@ -1,1 +1,1 @@
-(()=>{document.addEventListener("DOMContentLoaded",()=>{console.log("DOMContentLoaded"),console.log("giot is the best")});})();
+(()=>{document.addEventListener("DOMContentLoaded",()=>{$("._product-card-carousel").slick({infinite:!0,slidesToShow:3,slidesToScroll:1,autoplay:!1,autoplaySpeed:5e3,arrows:!0,dots:!0,pauseOnHover:!0,pauseOnFocus:!0,variableWidth:!0,responsive:[{breakpoint:600,settings:{slidesToShow:1,slidesToScroll:1}}]})});})();

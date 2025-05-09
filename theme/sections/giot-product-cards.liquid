@@ -1,16 +1,201 @@
+{% comment %} begin dependencies {% endcomment %}
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js" defer></script>
+<script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js" defer></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js" defer></script>
+{% comment %} end dependencies {% endcomment %}
+
+<script type="text/javascript" src="{{ 'giot-product-cards.js' | asset_url }}" defer></script>
 <link rel="stylesheet" href="{{ 'giot-product-cards.css' | asset_url }}">
 
-<div class="section">
-  <div class="container m-auto">
-    <p>
-        content
-    </p>
+<div class="_cards-container">
+  <div class="_product-card-carousel">
+    <div class="_card-slide">
+      <div class="_card">
+        <div class="_card-media">
+          <div class="_card-image">
+            <img src="https://cdn.shopify.com/s/files/1/0677/4010/6906/files/bg1.png?v=1746688647"
+              alt="product image bg" width="100%" height="100%" loading="lazy" class="_card-image-bg">
+          </div>
+          <a href="/collections/all" class="_card-link">
+            <img src="https://cdn.shopify.com/s/files/1/0677/4010/6906/files/ring2.png?v=1746688648"
+              alt="product image render" width="100%" height="100%" loading="lazy" class="_card-image-render">
+          </a>
+          <div class="_card-info">
+            <div class="_title">
+              <a href="/collections/all" class="_card-link">
+                product title
+              </a>
+            </div>
+            <div class="_price">
+              <span class="_sale-price">$1.100</span>
+              <span class="_compare-price">$2.200</span>
+              <span class="_compare-price-savings">50% off</span>
+            </div>
+            <div class="_description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis at
+              accusamus, ad soluta reprehenderit voluptates.</div>
+            <form class="_card-form" action="/cart/add" method="post" id="add-to-cart-form">
+              <input type="hidden" name="id" value="45719729864858">
+              <button class="_card-atc" type="submit">
+                <div class="_btn-text">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <path
+                      d="M21 4H2v2h2.3l3.28 9a3 3 0 0 0 2.82 2H19v-2h-8.6a1 1 0 0 1-.94-.66L9 13h9.28a2 2 0 0 0 1.92-1.45L22 5.27A1 1 0 0 0 21.27 4 .84.84 0 0 0 21 4zm-2.75 7h-10L6.43 6h13.24z">
+                    </path>
+                    <circle cx="10.5" cy="19.5" r="1.5"></circle>
+                    <circle cx="16.5" cy="19.5" r="1.5"></circle>
+                  </svg>
+                  <span>
+                    Add to cart
+                  </span>
+                </div>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="_card-slide">
+      <div class="_card">
+        <div class="_card-media">
+          <div class="_card-image">
+            <img src="https://cdn.shopify.com/s/files/1/0677/4010/6906/files/bg1.png?v=1746688647"
+              alt="product image bg" width="100%" height="100%" loading="lazy" class="_card-image-bg">
+          </div>
+          <a href="/collections/all" class="_card-link">
+            <img src="https://cdn.shopify.com/s/files/1/0677/4010/6906/files/ring2.png?v=1746688648"
+              alt="product image render" width="100%" height="100%" loading="lazy" class="_card-image-render">
+          </a>
+          <div class="_card-info">
+            <div class="_title">
+              <a href="/collections/all" class="_card-link">
+                product title
+              </a>
+            </div>
+            <div class="_price">
+              <span class="_sale-price">$1.100</span>
+              <span class="_compare-price">$2.200</span>
+              <span class="_compare-price-savings">50% off</span>
+            </div>
+            <div class="_description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis at
+              accusamus, ad soluta reprehenderit voluptates. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas tempora fugiat sequi delectus tenetur libero, veritatis saepe ipsum, velit iste beatae quis. Placeat aliquid consectetur porro at aperiam iusto, rerum illo quasi veritatis consequuntur, eveniet dolor reprehenderit ratione delectus natus?</div>
+            <form class="_card-form" action="/cart/add" method="post" id="add-to-cart-form">
+              <input type="hidden" name="id" value="45719729864858">
+              <button class="_card-atc" type="submit">
+                <div class="_btn-text">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <path
+                      d="M21 4H2v2h2.3l3.28 9a3 3 0 0 0 2.82 2H19v-2h-8.6a1 1 0 0 1-.94-.66L9 13h9.28a2 2 0 0 0 1.92-1.45L22 5.27A1 1 0 0 0 21.27 4 .84.84 0 0 0 21 4zm-2.75 7h-10L6.43 6h13.24z">
+                    </path>
+                    <circle cx="10.5" cy="19.5" r="1.5"></circle>
+                    <circle cx="16.5" cy="19.5" r="1.5"></circle>
+                  </svg>
+                  <span>
+                    Add to cart
+                  </span>
+                </div>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="_card-slide">
+      <div class="_card">
+        <div class="_card-media">
+          <div class="_card-image">
+            <img src="https://cdn.shopify.com/s/files/1/0677/4010/6906/files/bg1.png?v=1746688647"
+              alt="product image bg" width="100%" height="100%" loading="lazy" class="_card-image-bg">
+          </div>
+          <a href="/collections/all" class="_card-link">
+            <img src="https://cdn.shopify.com/s/files/1/0677/4010/6906/files/ring2.png?v=1746688648"
+              alt="product image render" width="100%" height="100%" loading="lazy" class="_card-image-render">
+          </a>
+          <div class="_card-info">
+            <div class="_title">
+              <a href="/collections/all" class="_card-link">
+                product title
+              </a>
+            </div>
+            <div class="_price">
+              <span class="_sale-price">$1.100</span>
+              <span class="_compare-price">$2.200</span>
+              <span class="_compare-price-savings">50% off</span>
+            </div>
+            <div class="_description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis at
+              accusamus, ad soluta reprehenderit voluptates.</div>
+            <form class="_card-form" action="/cart/add" method="post" id="add-to-cart-form">
+              <input type="hidden" name="id" value="45719729864858">
+              <button class="_card-atc" type="submit">
+                <div class="_btn-text">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <path
+                      d="M21 4H2v2h2.3l3.28 9a3 3 0 0 0 2.82 2H19v-2h-8.6a1 1 0 0 1-.94-.66L9 13h9.28a2 2 0 0 0 1.92-1.45L22 5.27A1 1 0 0 0 21.27 4 .84.84 0 0 0 21 4zm-2.75 7h-10L6.43 6h13.24z">
+                    </path>
+                    <circle cx="10.5" cy="19.5" r="1.5"></circle>
+                    <circle cx="16.5" cy="19.5" r="1.5"></circle>
+                  </svg>
+                  <span>
+                    Add to cart
+                  </span>
+                </div>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="_card-slide">
+      <div class="_card">
+        <div class="_card-media">
+          <div class="_card-image">
+            <img src="https://cdn.shopify.com/s/files/1/0677/4010/6906/files/bg1.png?v=1746688647"
+              alt="product image bg" width="100%" height="100%" loading="lazy" class="_card-image-bg">
+          </div>
+          <a href="/collections/all" class="_card-link">
+            <img src="https://cdn.shopify.com/s/files/1/0677/4010/6906/files/ring2.png?v=1746688648"
+              alt="product image render" width="100%" height="100%" loading="lazy" class="_card-image-render">
+          </a>
+          <div class="_card-info">
+            <div class="_title">
+              <a href="/collections/all" class="_card-link">
+                product title
+              </a>
+            </div>
+            <div class="_price">
+              <span class="_sale-price">$1.100</span>
+              <span class="_compare-price">$2.200</span>
+              <span class="_compare-price-savings">50% off</span>
+            </div>
+            <div class="_description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis at
+              accusamus, ad soluta reprehenderit voluptates.</div>
+            <form class="_card-form" action="/cart/add" method="post" id="add-to-cart-form">
+              <input type="hidden" name="id" value="45719729864858">
+              <button class="_card-atc" type="submit">
+                <div class="_btn-text">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <path
+                      d="M21 4H2v2h2.3l3.28 9a3 3 0 0 0 2.82 2H19v-2h-8.6a1 1 0 0 1-.94-.66L9 13h9.28a2 2 0 0 0 1.92-1.45L22 5.27A1 1 0 0 0 21.27 4 .84.84 0 0 0 21 4zm-2.75 7h-10L6.43 6h13.24z">
+                    </path>
+                    <circle cx="10.5" cy="19.5" r="1.5"></circle>
+                    <circle cx="16.5" cy="19.5" r="1.5"></circle>
+                  </svg>
+                  <span>
+                    Add to cart
+                  </span>
+                </div>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>    
   </div>
 </div>
 
 
 {% schema %}
-{
+  {
   "name": "Product card",
   "tag": "section",
   "class": "section",
@@ -141,4 +326,5 @@
     }
   ]
 }
+
 {% endschema %}
